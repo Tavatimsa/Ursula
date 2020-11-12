@@ -1,7 +1,9 @@
 # bot.py
-import os
-import discord
+import logging, os, discord
 from dotenv import load_dotenv
+
+
+logging.basicConfig(filename='Ursula.log', level=logging.INFO)
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -12,10 +14,10 @@ client = discord.Client()
 
 @client.event
 async def on_ready():
-    print(f'{client.user} has connected to Discord!\n')
+    logging.info(f'{client.user} has connected to Discord!\n')
 
     for guild in client.guilds:
             guilds = '- ' + guild.name + ' ' + str(guild.id) + '\n'
-    print(f'The bot is curently member of the following guilds:\n{guilds}')
+    logging.info(f'The bot is currently member of the following guilds:\n{guilds}')
 
 client.run(TOKEN)
