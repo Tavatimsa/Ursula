@@ -1,6 +1,7 @@
 # bot.py
 import logging, os, discord
 from dotenv import load_dotenv
+import actions
 
 # logging.basicConfig(filename='Errors.log',level=logging.ERROR, format='%(asctime)s %(levelname)s: %(message)s')
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
@@ -27,10 +28,14 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member):
-    logging.info(f'{member} has joined.')
-    await member.create_dm()
-    await member.dm_channel.send(
-        f'Üdv a BloodTracken, {member.name}! Remélem, jól érzed majd magad nálunk :)'
-    )
+    actions.greeting(member)
+
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+    if 'boldog szül' in message.content.lower():
+        await message.channel.send('Boldog születésnapot! 🎈🎉')
 
 client.run(TOKEN)
