@@ -1,6 +1,5 @@
 # bot.py
 import os
-
 import discord
 from dotenv import load_dotenv
 
@@ -10,15 +9,13 @@ GUILD = os.getenv('DISCORD_GUILD')
 
 client = discord.Client()
 
+
 @client.event
 async def on_ready():
-    guild = discord.utils.find(lambda g: g.name == GUILD, client.guilds)
-    print(
-        f'{client.user} is connected to the following guild:\n'
-        f'{guild.name}(id: {guild.id})'
-    )
+    print(f'{client.user} has connected to Discord!\n')
 
-    members = '\n - '.join([member.name for member in guild.members])
-    print(f'Guild Members:\n - {members}')
+    for guild in client.guilds:
+            guilds = '- ' + guild.name + ' ' + str(guild.id) + '\n'
+    print(f'The bot is curently member of the following guilds:\n{guilds}')
 
 client.run(TOKEN)
