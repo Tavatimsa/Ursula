@@ -1,8 +1,17 @@
 # bot.py
-import logging, os, json, requests
+import logging, random, praw, os
+from dotenv import load_dotenv
 
-URL = os.getenv('DOWNLOAD_URL')
-FILENAME = os.getenv('DOWNLOAD_FILENAME')
+load_dotenv()
+REDDIT_CLIENT_ID = os.getenv('REDDIT_CLIENT_ID')
+REDDIT_CLIENT_SECRET = os.getenv('REDDIT_CLIENT_SECRET')
+REDDIT_USER_AGENT = os.getenv('REDDIT_USER_AGENT')
+
+print (REDDIT_CLIENT_ID)
+
+reddit = praw.Reddit(client_id=REDDIT_CLIENT_ID,
+                     client_secret=REDDIT_CLIENT_SECRET,
+                     user_agent=REDDIT_USER_AGENT)
 
 
 async def greeting(member):
@@ -13,14 +22,9 @@ async def greeting(member):
     )
 
 
-async def memes():
-    resp = requests.get(URL, allow_redirects=True)
-    memes_json = json.loads(resp.text)
-    open(FILENAME, 'wb').write(resp.content)
-    json_data = json.loads(open(FILENAME).read())
-    meme = requests.get(json_data["data"]["children"][10]["data"]["url"], allow_redirects=True)
-    img_urls = []
-    for item in json_data["data"]["children"]:
-        itemurl = item["data"]["url"]
-        if any(itemurl[-4:] == ext for ext in ('.jpg', '.png')):
-            img_urls.append(itemurl)
+async def fun_pic(message):
+    memes_submissions = reddit.subreddit('memes').hot()
+    post_to_pick = random.randint(1, 10)
+    for i in range(0, post_to_pick):
+        submission = next(x for x in memes_submissions if not x.stickied)
+    await message.channel.send(submission.url)

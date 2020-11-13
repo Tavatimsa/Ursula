@@ -1,5 +1,5 @@
 # commands.py
-import logging, discord
+import actions
 
 
 async def call_bot(message):
@@ -7,5 +7,5 @@ async def call_bot(message):
         await message.channel.send('Szia!')
     if any(word in message.content.lower() for word in ('kösz', 'szeretlek')):
         await message.add_reaction('❤')
-    if any(word in message.content.lower() for word in ('mémek', 'reddit')):
-        await actions.memes()
+    if any(word in message.content.lower() for word in ('képet', 'vicceset')):
+        await actions.fun_pic(message)
