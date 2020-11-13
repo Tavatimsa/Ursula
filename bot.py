@@ -1,7 +1,7 @@
 # bot.py
 import logging, os, discord
 from dotenv import load_dotenv
-import actions
+import actions, commands
 
 # logging.basicConfig(filename='Errors.log',level=logging.ERROR, format='%(asctime)s %(levelname)s: %(message)s')
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
@@ -37,5 +37,7 @@ async def on_message(message):
         return
     if 'boldog szül' in message.content.lower():
         await message.channel.send('Boldog születésnapot! 🎈🎉')
+    if client.user in message.mentions or str(message.channel.type) == 'private':
+        await commands.call_bot(message)
 
 client.run(TOKEN)
