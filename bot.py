@@ -1,5 +1,7 @@
 # bot.py
-import logging, os, discord
+import logging
+from os import getenv
+from discord import Client
 from dotenv import load_dotenv
 import actions, commands
 
@@ -7,10 +9,10 @@ import actions, commands
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
 
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
-GUILD = os.getenv('DISCORD_GUILD')
+TOKEN = getenv('DISCORD_TOKEN')
+GUILD = getenv('DISCORD_GUILD')
 
-client = discord.Client()
+client = Client()
 
 
 @client.event
@@ -37,6 +39,10 @@ async def on_message(message):
         return
     if 'boldog szül' in message.content.lower():
         await message.channel.send('Boldog születésnapot! 🎈🎉')
+    if '!pr' in message.content.lower():
+        await actions.last_prs(message)
+    if '!kep' in message.content.lower():
+        await actions.fun_pic(message)
     if client.user in message.mentions or str(message.channel.type) == 'private':
         await commands.call_bot(message)
 

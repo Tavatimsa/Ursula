@@ -9,3 +9,5 @@ async def call_bot(message):
         await message.add_reaction('❤')
     if any(word in message.content.lower() for word in ('képet', 'vicceset')):
         await actions.fun_pic(message)
+    if any(word in message.content.lower() for word in ('build', 'pull request')) or 'PR' in message.content:
+        await actions.last_prs(message)
