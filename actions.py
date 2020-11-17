@@ -46,6 +46,6 @@ async def last_prs(message):
     build_result = next(bamboo.results(project_key=BAMBOO_PROJECT, plan_key=BAMBOO_PLAN))
     dwn_url = BAMBOO_URL + '/browse/' + build_result['buildResultKey'] + BAMBOO_ARTIFACT
     resp = requests.get(dwn_url, auth = HTTPBasicAuth(BAMBOO_USERNAME, BAMBOO_PASSWORD))
-    if (resp.status_code is not 200):
+    if resp.status_code is not 200:
         logging.error('Failed to get the requested file.')
     await message.channel.send('```' + resp.text + '```')
