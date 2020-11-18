@@ -3,7 +3,7 @@ import logging
 from os import getenv
 from discord import Client
 from dotenv import load_dotenv
-import actions, commands
+import actions
 
 # logging.basicConfig(filename='Errors.log',level=logging.ERROR, format='%(asctime)s %(levelname)s: %(message)s')
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
@@ -44,6 +44,13 @@ async def on_message(message):
     if '!kep' in message.content.lower():
         await actions.fun_pic(message)
     if client.user in message.mentions or str(message.channel.type) == 'private':
-        await commands.call_bot(message)
+        if any(word in message.content.lower() for word in ('szia', 'hello', 'hali')):
+            await message.channel.send('Szia!')
+        if any(word in message.content.lower() for word in ('kösz', 'szeretlek')):
+            await message.add_reaction('❤')
+        if any(word in message.content.lower() for word in ('képet', 'vicceset')):
+            await actions.fun_pic(message)
+        if any(word in message.content.lower() for word in ('build', 'pull request')) or 'PR' in message.content:
+            await actions.last_prs(message)
 
 client.run(TOKEN)
