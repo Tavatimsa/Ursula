@@ -2,7 +2,7 @@
 import logging
 import requests
 from requests.auth import HTTPBasicAuth
-from praw import Reddit
+import praw
 from atlassian import Bamboo
 from os import getenv
 from dotenv import load_dotenv
@@ -18,17 +18,16 @@ BAMBOO_PROJECT = getenv('BAMBOO_PROJECT')
 BAMBOO_PLAN = getenv('BAMBOO_PLAN')
 BAMBOO_ARTIFACT = getenv('BAMBOO_ARTIFACT')
 
-reddit = Reddit(
+reddit = praw.Reddit(
     client_id=REDDIT_CLIENT_ID,
     client_secret=REDDIT_CLIENT_SECRET,
     user_agent=REDDIT_USER_AGENT)
-if reddit is None:
-    logging.error('Failed to connect to Reddit.')
+
 
 bamboo = Bamboo(
     url=BAMBOO_URL,
     username=BAMBOO_USERNAME,
-    password=BAMBOO_PASSWORD)
+    password='BAMBOO_PASSWORD')
 if bamboo is None:
     logging.error('Failed to connect to Bamboo.')
 
@@ -42,22 +41,25 @@ async def greeting(member):
 
 
 async def fun_pic(message):
-    if reddit is None:
-        await message.channel.send('Nem tudok csatlakozni a Reddithez.')
-    else:
+    try:
         submission = reddit.subreddit('ProgrammerHumor+memes').random()
         await message.channel.send(submission.url)
+    except:
+        logging.error('Issue with Reddit.')
+        await message.channel.send('Nem tudok csatlakozni a Reddithez :(')
 
 
 async def last_prs(message):
-    if bamboo is None:
-        await message.channel.send('Nem tudok csatlakozni a Bamboohoz.')
-    else:
+    try:
         build_result = next(bamboo.results(project_key=BAMBOO_PROJECT, plan_key=BAMBOO_PLAN))
-        dwn_url = BAMBOO_URL + '/browse/' + build_result['buildResultKey'] + BAMBOO_ARTIFACT
-        resp = requests.get(dwn_url, auth = HTTPBasicAuth(BAMBOO_USERNAME, BAMBOO_PASSWORD))
-        if resp.status_code is not 200:
-            logging.error('Failed to get the requested file.')
-            await message.channel.send('Nem sikerült letölteni a képet :(.')
-        else:
-            await message.channel.send('```' + resp.text + '```')
+    except:
+        logging.error('Issue with Bamboo.')
+        await message.channel.send('Nem tudok csatlakozni a Bamboohoz :(')
+        return
+    dwn_url = BAMBOO_URL + '/browse/' + build_result['buildResultKey'] + BAMBOO_ARTIFACT
+    resp = requests.get(dwn_url, auth = HTTPBasicAuth(BAMBOO_USERNAME, BAMBOO_PASSWORD))
+    if resp.status_code is not 200:
+        logging.error('Failed to get the requested file.')
+        await message.channel.send('Nem sikerült letölteni a képet :(.')
+    else:
+        await message.channel.send('```' + resp.text + '```')
