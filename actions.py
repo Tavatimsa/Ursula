@@ -27,7 +27,7 @@ reddit = praw.Reddit(
 bamboo = Bamboo(
     url=BAMBOO_URL,
     username=BAMBOO_USERNAME,
-    password='BAMBOO_PASSWORD')
+    password=BAMBOO_PASSWORD)
 if bamboo is None:
     logging.error('Failed to connect to Bamboo.')
 
