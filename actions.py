@@ -23,13 +23,10 @@ reddit = praw.Reddit(
     client_secret=REDDIT_CLIENT_SECRET,
     user_agent=REDDIT_USER_AGENT)
 
-
 bamboo = Bamboo(
     url=BAMBOO_URL,
     username=BAMBOO_USERNAME,
     password=BAMBOO_PASSWORD)
-if bamboo is None:
-    logging.error('Failed to connect to Bamboo.')
 
 
 async def greeting(member):
