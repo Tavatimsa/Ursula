@@ -7,7 +7,7 @@ Commands I know:
 
 I can only be used if you create a .env file with the following content and specify the values after '='.
 
-# .env
+```# .env
 DISCORD_TOKEN=
 DOWNLOAD_URL=
 DOWNLOAD_FILENAME=
@@ -19,5 +19,5 @@ BAMBOO_USERNAME=
 BAMBOO_PASSWORD=
 BAMBOO_PROJECT=
 BAMBOO_PLAN=
-BAMBOO_ARTIFACT=
+BAMBOO_ARTIFACT=```
 
