@@ -1,12 +1,14 @@
 "# Ursula" 
 
-Hi, I'm Ursula, a simple bot created to help the BloodTrack team.
+Hi, I'm Ursula, a simple Discord bot created to help the development team where my creator works.
 Commands I know:
-!kep - post a random meme (general or development related)
-!pr - List pull requests from the last bamboo build.
+* _!kep_ - post a random meme (general or development related)
+* _!pr_ - List pull requests from the last bamboo build.
 
-I can only be used if you create a .env file with the following content and specify the values after '='.
+I can do this only if you create a file named ".env" in my directory. 
+Please insert the following content to the file and specify the values after '='.
 
+```
 # .env
 DISCORD_TOKEN=
 DOWNLOAD_URL=
@@ -20,4 +22,4 @@ BAMBOO_PASSWORD=
 BAMBOO_PROJECT=
 BAMBOO_PLAN=
 BAMBOO_ARTIFACT=
-
+```
