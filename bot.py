@@ -5,12 +5,10 @@ from discord import Client
 from dotenv import load_dotenv
 import actions
 
-# logging.basicConfig(filename='Errors.log',level=logging.ERROR, format='%(asctime)s %(levelname)s: %(message)s')
-logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
+logging.basicConfig(filename='Errors.log',level=logging.ERROR, format='%(asctime)s %(levelname)s: %(message)s')
 
 load_dotenv()
 TOKEN = getenv('DISCORD_TOKEN')
-GUILD = getenv('DISCORD_GUILD')
 
 client = Client()
 
