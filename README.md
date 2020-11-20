@@ -1,6 +1,6 @@
 "# Ursula" 
 
-Hi, I'm Ursula, a simple bot created to help the development team where my creator works.
+Hi, I'm Ursula, a simple Discord bot created to help the development team where my creator works.
 Commands I know:
 * _!kep_ - post a random meme (general or development related)
 * _!pr_ - List pull requests from the last bamboo build.
